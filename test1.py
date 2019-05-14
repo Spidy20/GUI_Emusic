@@ -14,7 +14,7 @@ root.minsize(500,500)
 root.iconbitmap('C:/Users/kusha/PycharmProjects/GUI Emusic/icons/music.ico')
 root.resizable(0, 0)
 
-listbox=Listbox(root,selectmode=SINGLE,width=100,height=20,bg="#0ff",fg="black")
+listbox=Listbox(root,selectmode=ACTIVE,width=100,height=20,bg="#0ff",fg="black")
 listbox.pack(fill=X)
 
 sb =Scrollbar(root,orient = 'vertical')
@@ -156,12 +156,24 @@ def del_music(self):
     for item in items:
         listbox.delete(item)
         listofsongs.pop(item)
+        print(item)
         print(listofsongs)
 
 def play_music(self):
     items = map(int, listbox.curselection())
     for item in items:
+        item = int(item)
+        pygame.mixer.music.load(listofsongs[item])
+        statusbar['text'] = "Playing music" + ' - ' + os.path.basename(listofsongs[item])
+        audio = MP3(listofsongs[item])
+        x = audio.info.length
+        mins, secs = divmod(x, 60)
+        mins = round(mins)
+        secs = round(secs)
+        timeformat1 = '{:02d}:{:02d}'.format(mins, secs)
+        length['text'] = "Total Length" + ' - ' + timeformat1
         pygame.mixer.music.play()
+        listbox.itemconfig(item, bg='pink')
 
 
 
@@ -239,7 +251,7 @@ previousbutton.pack(side=LEFT)
 playbutton = Button(framedown,text="►",activebackground = "Red",width=15  ,height=2)
 playbutton.pack(side=LEFT)
 
-mutebtn = Button(framedown,text="Mute",activebackground = "Red",width=15  ,height=2)
+mutebtn = Button(framedown,text="Play",activebackground = "Red",width=15  ,height=2)
 mutebtn.pack(side=LEFT)
 
 pausebutton = Button(framedown,bg='red',text="►/║║",activebackground = "white",width=15  ,height=2)
@@ -258,7 +270,7 @@ nextbutton.pack(side=LEFT)
 playbutton.bind("<Button-1>",playsong)
 nextbutton.bind("<Button-1>",nextsong)
 previousbutton.bind("<Button-1>",previoussong)
-mutebtn.bind("<Button-1>",mute)
+mutebtn.bind("<Button-1>",play_music)
 pausebutton.bind("<Button-1>",pausesong)
 del_button.bind("<Button-1>",del_music)
 add_button.bind("<Button-1>",add_music)

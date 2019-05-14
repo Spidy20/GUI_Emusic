@@ -12,6 +12,7 @@ from PIL import ImageTk, Image
 import pygame
 
 #####Window is our Main frame of system
+
 window = tk.Tk()
 window.title("EMUSIC - An Emotion Base Music Player")
 
@@ -232,7 +233,18 @@ def emotion_music():
         def play_music(self):
             items = map(int, listbox.curselection())
             for item in items:
+                item = int(item)
+                pygame.mixer.music.load(listofsongs[item])
+                statusbar['text'] = "Playing music" + ' - ' + os.path.basename(listofsongs[item])
+                audio = MP3(listofsongs[item])
+                x = audio.info.length
+                mins, secs = divmod(x, 60)
+                mins = round(mins)
+                secs = round(secs)
+                timeformat1 = '{:02d}:{:02d}'.format(mins, secs)
+                length['text'] = "Total Length" + ' - ' + timeformat1
                 pygame.mixer.music.play()
+                listbox.itemconfig(item, bg='pink')
 
         def add_music(self):
             import tkinter as tk
@@ -267,6 +279,8 @@ def emotion_music():
             from tkinter import messagebox
             if messagebox.askokcancel("Quit", "Do you want to quit?"):
                 pygame.mixer.music.stop()
+                global window
+                window.destroy()
                 root.destroy()
 
         root.protocol("WM_DELETE_WINDOW", on_closing)
@@ -296,7 +310,7 @@ def emotion_music():
         playbutton = Button(framedown, text="►", activebackground="Red", width=15, height=2)
         playbutton.pack(side=LEFT)
 
-        mutebtn = Button(framedown, text="Mute", activebackground="Red", width=15, height=2)
+        mutebtn = Button(framedown, text="Play", activebackground="Red", width=15, height=2)
         mutebtn.pack(side=LEFT)
 
         pausebutton = Button(framedown, bg='red', text="►/║║", activebackground="white", width=15, height=2)
@@ -314,7 +328,7 @@ def emotion_music():
         playbutton.bind("<Button-1>", playsong)
         nextbutton.bind("<Button-1>", nextsong)
         previousbutton.bind("<Button-1>", previoussong)
-        mutebtn.bind("<Button-1>", mute)
+        mutebtn.bind("<Button-1>", play_music)
         pausebutton.bind("<Button-1>", pausesong)
         del_button.bind("<Button-1>", del_music)
         add_button.bind("<Button-1>", add_music)
@@ -362,11 +376,12 @@ def emotion_music():
                 cv2.putText(im, text, (x + h, y), font, 1, (0, 191, 255), 2)
 
         # Show the image/
-        cv2.imshow('Scanning your Face ', im)
+        cv2.imshow('Scanning your Face', im)
         key = cv2.waitKey(30) & 0xff
         if time.time() > future:  ##after 20 second music will play
             try:
                 cv2.destroyAllWindows()
+
                 if text == 'Angry':
                     t = 'You Looking Angry, I playing Angry playlist for you:)'
                     status.configure(text = t,bg='Olive Drab1')
@@ -377,7 +392,7 @@ def emotion_music():
 
                 if text == 'Smile':
                     t = 'You Looking Happy, Playing Happy playlist for you:)'
-                    status.configure(text=t, bg='purple1')
+                    status.configure(text=t, bg='purple1',foreground = 'white')
                     status.place(x=200, y=585)
                     dc = ('C:/Users/kusha/PycharmProjects/Music_player_with_Emotions_recognition/songs/Smile/' )
                     playsong(dc)
@@ -396,24 +411,24 @@ def emotion_music():
                     status.place(x=200, y=585)
                     dc = ("C:/Users/kusha/PycharmProjects/Music_player_with_Emotions_recognition/songs/Sad/")
                     playsong(dc)
+                break
 
-                if time.time() > future:
-                    cv2.destroyAllWindows()
-                    break
 
             except:
                 t = "Stay Focus in camera atleast 15 Seconds"
                 status.configure(text=t, bg='black',foreground ='white')
                 status.place(x=200, y=585)
                 cv2.destroyAllWindows()
-            break
+
 
         if key == 27:  # The Esc key
             cv2.destroyAllWindows()
             break
+        k = future+2
+        if time.time() > k:
+            cv2.destroyAllWindows()
+            break
 
-    webcam.release()
-    cv2.destroyAllWindows()
 
 window.iconbitmap('C:/Users/kusha/PycharmProjects/GUI Emusic/icons/music.ico')
 window.geometry('1280x720')
@@ -449,6 +464,14 @@ sad_img = ImageTk.PhotoImage(Image.open("C:/Users/kusha/PycharmProjects/GUI Emus
 panel4 = Label(window, image = sad_img)
 panel4.pack()
 panel4.place(x = 785,y=450)
+
+
+def on_closing():
+    from tkinter import messagebox
+    if messagebox.askokcancel("Quit", "Do you want to quit?"):
+        window.destroy()
+        # cv2.destroyAllWindows()
+window.protocol("WM_DELETE_WINDOW", on_closing)
 
 
 
