@@ -31,7 +31,7 @@ songlabel =Label(root,textvariable=v,width=80)
 index=0
 count=0
 ctr=0
-#
+
 # if directory == 'C:/Users/kusha/PycharmProjects/Music_player_with_Emotions_recognition/songs/Angry/':
 #     root.title('Angry Playlist')
 #

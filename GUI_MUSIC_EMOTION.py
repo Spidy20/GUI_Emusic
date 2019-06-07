@@ -434,6 +434,7 @@ window.iconbitmap('C:/Users/kusha/PycharmProjects/GUI Emusic/icons/music.ico')
 window.geometry('1280x720')
 window.state('zoomed')
 
+from PIL import ImageTk,Image
 face_img = ImageTk.PhotoImage(Image.open("C:/Users/kusha/PycharmProjects/GUI Emusic/images/face-scanner.png"))
 panel = Label(window, image = face_img)
 panel.pack()
@@ -454,7 +455,6 @@ panel2 = Label(window, image = angry_img)
 panel2.pack()
 panel2.place(x = 785,y=280)
 
-
 scare_img = ImageTk.PhotoImage(Image.open("C:/Users/kusha/PycharmProjects/GUI Emusic/images/ff.png"))
 panel3 = Label(window, image = scare_img)
 panel3.pack()
@@ -465,15 +465,12 @@ panel4 = Label(window, image = sad_img)
 panel4.pack()
 panel4.place(x = 785,y=450)
 
-
 def on_closing():
     from tkinter import messagebox
     if messagebox.askokcancel("Quit", "Do you want to quit?"):
         window.destroy()
         # cv2.destroyAllWindows()
 window.protocol("WM_DELETE_WINDOW", on_closing)
-
-
 
 play_music = tk.Button(window, text="Play Music",fg="white",command = emotion_music  ,bg="blue2"  ,width=18  ,height=2, activebackground = "Red" ,font=('times', 18, 'bold '))
 play_music.place(x=80, y=500)
