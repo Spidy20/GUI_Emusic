@@ -50,7 +50,6 @@ def updatelabel():
     global index
     global songname
     v.set(listofsongs[index])
-    #return songname
 
 def pausesong(event):
     global ctr
@@ -111,14 +110,13 @@ def previoussong(event):
     length['text'] = "Total Length" + ' - ' + timeformat1
     pygame.mixer.music.play()
     listbox.itemconfig(index, bg='pink')
-    # listbox.selection_set(first=index)
     try:
         updatelabel()
     except NameError:
         print("")
 
 
-directory = 'E:/kushal choice/'
+directory = 'E:/kushal choice/' ##Enter your music Directory path
 os.chdir(directory)
 for  files in os.listdir(directory):
     try:
@@ -176,7 +174,6 @@ def play_music(self):
         listbox.itemconfig(item, bg='pink')
 
 
-
 def add_music(self):
     import tkinter as tk
     from tkinter import filedialog
@@ -186,10 +183,8 @@ def add_music(self):
     filename = filedialog.askopenfilename()
     print(filename)
     listofsongs.insert(index,filename)
-    #listofsongs.append(filename)
     print(listofsongs)
     listbox.insert(index,filename)
-
     rt.mainloop()
 
 
@@ -206,9 +201,6 @@ length['text'] = "Total Length" + ' - ' + timeformat
 le = Label(root, text="Welcome to Melody", font='Times 13 bold')
 le.pack(side=BOTTOM, fill=X)
 le.place(x =270,y=445 )
-
-
-
 
 def mute(self):
     vol.set(0)
@@ -246,7 +238,6 @@ framedown.pack()
 
 previousbutton = Button(framedown,text="◄◄",bg='#0ff',activebackground = "Red",width=15  ,height=2)
 previousbutton.pack(side=LEFT)
-
 
 playbutton = Button(framedown,text="►",activebackground = "Red",width=15  ,height=2)
 playbutton.pack(side=LEFT)

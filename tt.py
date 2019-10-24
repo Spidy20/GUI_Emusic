@@ -1,18 +1,20 @@
 from tkinter import *
+
 root = Tk()
+
 root.title('Test frame')
 root.configure(background = 'snow')
-root.geometry('1280x720')
 root.iconbitmap('C:/Users/kusha/PycharmProjects/GUI Emusic/icons/music.ico')
 root.state('zoomed')
+root.geometry('1280x720')
 
-def on_closing():
-    from tkinter import messagebox
-    if messagebox.askokcancel("Quit", "Do you want to quit?"):
-        root.destroy()
-        # cv2.destroyAllWindows()
-root.protocol("WM_DELETE_WINDOW", on_closing)
-
+# def on_closing():
+#     from tkinter import messagebox
+#     if messagebox.askokcancel("Quit", "Do you want to quit?"):
+#         root.destroy()
+#         # cv2.destroyAllWindows()
+# root.protocol("WM_DELETE_WINDOW", on_closing)
+#
 def submit():
     wind = Tk()
     wind.title('frame2')
@@ -31,8 +33,9 @@ def submit():
     lbl2.place(x=100, y=250)
 
     wind.mainloop()
-
-lbl1 = Label(root,text = 'Enter name',width = 15,fg = 'blue',bg ='yellow',height = 3,font=('times', 15, 'bold '))
+#
+#
+lbl1 = Label(root,text = 'Enter name',width = 15,fg = 'blue',bg ='yellow',height = 3,font=('times', 15, 'bold  italic'))
 lbl1.place(x = 100, y =100)
 
 lbl2 = Label(root,text = 'Enter surname',width = 15,fg = 'blue',bg ='yellow',height = 3,font=('times', 15, 'bold '))
