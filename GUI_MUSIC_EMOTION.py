@@ -67,7 +67,6 @@ def about_me():
     windo.mainloop()
 
 def emotion_music():
-    # From:- Techmicra IT solution
     import time
     import cv2
     import label_image
@@ -259,9 +258,9 @@ def emotion_music():
 
             rt.mainloop()
 
-        def show_value(self):
-            i = vol.get()
-            pygame.mixer.music.set_volume(i)
+        def show_value(val):
+            volume = int(val) / 100
+            pygame.mixer.music.set_volume(volume)
 
         length = Label(root, text="Welcome to Melody", font='Times 13 bold')
         length.pack(side=BOTTOM, fill=X)
@@ -283,9 +282,11 @@ def emotion_music():
 
         root.protocol("WM_DELETE_WINDOW", on_closing)
 
-        vol = Scale(root, from_=0, to=10, orient=HORIZONTAL, resolution=10, command=show_value)
+        vol = Scale(root, from_=0, to=100, orient=HORIZONTAL, relief=SUNKEN, resolution=10, command=show_value,
+                    activebackground='cyan')
+        vol.set(80)
+        pygame.mixer.music.set_volume(0.8)
         vol.place(x=910, y=436)
-        vol.set(10)
 
         volume = Label(root, text="Volume", font='Times 13 bold')
         volume.place(x=840, y=450)
